@@ -248,7 +248,7 @@ col_b1, col_b2 = st.sidebar.columns(2)
 with col_b1:
     st.sidebar.button("📋 Load Sample", on_click=load_sample_patient, use_container_width=True)
 with col_b2:
-    st.sidebar.button("🗑️ Clear", on_click=clear_patient_inputs, use_container_width=True)
+    st.sidebar.button("🗑️️ Clear", on_click=clear_patient_inputs, use_container_width=True)
 
 st.sidebar.divider()
 
@@ -357,7 +357,7 @@ else:
 
 st.divider()
 st.subheader("Model Performance on Test Set")
-st.dataframe(performance, use_container_width=True, hide_index.True if "hide_index" in pd.DataFrame().to_csv() else True)
+st.dataframe(performance, use_container_width=True, hide_index=True)
 
 
 # ============================================================
