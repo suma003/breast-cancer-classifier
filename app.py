@@ -35,7 +35,7 @@ from sklearn.metrics import (
 
 
 # ============================================================
-# 1. STREAMLIT PAGE SETTINGS
+# 1. STREAMLIT PAGE SETTINGS & MOBILE CSS STYLING
 # ============================================================
 
 st.set_page_config(
@@ -43,6 +43,42 @@ st.set_page_config(
     page_icon="🧬",
     layout="wide"
 )
+
+# Custom CSS for Mobile & UI Polish
+st.markdown("""
+<style>
+    /* Main container padding adjustments for mobile */
+    @media (max-width: 768px) {
+        .main .block-container {
+            padding: 1rem 1rem;
+        }
+        h1 {
+            font-size: 1.6rem !important;
+        }
+        h2 {
+            font-size: 1.3rem !important;
+        }
+        h3 {
+            font-size: 1.1rem !important;
+        }
+    }
+
+    /* Modern Card Design */
+    .metric-card {
+        background-color: #f8f9fa;
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+        margin-bottom: 15px;
+    }
+
+    /* Sidebar improvements */
+    [data-testid="stSidebar"] {
+        background-color: #fcfcfc;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 
 # ============================================================
@@ -234,8 +270,8 @@ predict_clicked = st.sidebar.button("🔍 Predict Diagnosis", type="primary", us
 # ============================================================
 
 st.title("🧬 Breast Cancer Classification System")
-st.write("Machine-learning demonstration based on the Breast Cancer Wisconsin Diagnostic dataset[cite: 1].")
-st.info("Educational ML demonstration only — this application is not a medical diagnosis tool[cite: 1].")
+st.write("Machine-learning demonstration based on the Breast Cancer Wisconsin Diagnostic dataset.")
+st.info("Educational ML demonstration only — this application is not a medical diagnosis tool.")
 
 st.divider()
 
@@ -275,7 +311,7 @@ if predict_clicked:
 
     result_df = pd.DataFrame(prediction_results)
 
-    # Layout for Results
+    # Layout for Results (Automatically stacks nicely on mobile screens)
     res_col1, res_col2 = st.columns([1.2, 1])
 
     with res_col1:
@@ -291,9 +327,9 @@ if predict_clicked:
         majority_pred = "MALIGNANT" if malignant_count > benign_count else "BENIGN"
         agreement_text = f"{max(malignant_count, benign_count)} / {len(models)} Models"
         
-        # Enhanced card layout matching your design requirement
+        # Enhanced responsive card container
         st.markdown(f"""
-        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <div class="metric-card">
             <p style="margin-bottom: 8px;">🟢 <b>BENIGN:</b> &nbsp;&nbsp; {benign_count} Model{'s' if benign_count > 1 else ''}</p>
             <p style="margin-bottom: 12px;">🔴 <b>MALIGNANT:</b> &nbsp;&nbsp; {malignant_count} Model{'s' if malignant_count > 1 else ''}</p>
             <hr style="margin: 12px 0; border: none; border-top: 1px solid #ddd;">
@@ -308,7 +344,7 @@ if predict_clicked:
 
     st.warning(
         "The displayed probability is the model's estimated probability for the Malignant class. "
-        "It must not be interpreted as a clinical diagnosis or medical certainty[cite: 1]."
+        "It must not be interpreted as a clinical diagnosis or medical certainty."
     )
 
 else:
@@ -321,7 +357,7 @@ else:
 
 st.divider()
 st.subheader("Model Performance on Test Set")
-st.dataframe(performance, use_container_width=True, hide_index=True)
+st.dataframe(performance, use_container_width=True, hide_index.True if "hide_index" in pd.DataFrame().to_csv() else True)
 
 
 # ============================================================
@@ -329,5 +365,5 @@ st.dataframe(performance, use_container_width=True, hide_index=True)
 # ============================================================
 
 st.divider()
-st.caption("Train/test split: 80/20, stratified. Random Forest and SVM use 5-fold GridSearchCV with F1 scoring[cite: 1].")
-st.caption("CSTE 3207 ML Project | Breast Cancer Classification[cite: 1]")
+st.caption("Train/test split: 80/20, stratified. Random Forest and SVM use 5-fold GridSearchCV with F1 scoring.")
+st.caption("CSTE 3207 ML Project | Breast Cancer Classification")
